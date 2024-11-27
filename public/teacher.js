@@ -7,6 +7,19 @@ function handleEnter(event, action) {
     }
 }
 
+// Home으로 이동
+function goToHomePage() {
+    window.location.href = "http://13.239.36.224:3000/index.html";
+}
+
+// DOMContentLoaded 이벤트 핸들러
+document.addEventListener("DOMContentLoaded", () => {
+    // Home 버튼 클릭 시 이동
+    const homeButton = document.getElementById("home-button");
+    homeButton.addEventListener("click", goToHomePage);
+});
+
+
 function authenticate() {
     const password = document.getElementById("teacher-password").value;
     const correctPassword = "1002"; // 고정된 비밀번호

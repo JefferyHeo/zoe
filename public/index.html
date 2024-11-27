@@ -2,17 +2,22 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 추가된 부분 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>학생 마일리지 조회</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <header>
+        <button id="officer-button">Officer</button> <!-- teacher.html로 이동 -->
+    </header>
+
     <h1>학생 마일리지 조회</h1>
+
     <!-- 학생 이름 입력 -->
     <div>
         <label for="student-name">학생 이름:</label>
         <input type="text" id="student-name" placeholder="학생 이름을 입력하세요">
-        <button onclick="fetchMileage()">조회</button>
+        <button onclick="fetchMileage()">조회</button> <!-- 버튼으로 조회 -->
     </div>
 
     <!-- 마일리지 결과 표시 -->
@@ -23,6 +28,6 @@
         <ul id="mileage-log"></ul>
     </div>
 
-    <script src="app.js"></script>
+    <script src="index.js"></script> <!-- JavaScript 파일 연결 -->
 </body>
 </html>

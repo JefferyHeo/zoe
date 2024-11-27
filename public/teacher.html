@@ -2,9 +2,9 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 반응형 뷰포트 추가 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>선생님 마일리지 관리</title>
-    <link rel="stylesheet" href="teacher.css"> <!-- 별도 CSS 파일 연결 -->
+    <link rel="stylesheet" href="teacher.css">
 </head>
 <body>
     <h1>선생님 마일리지 관리</h1>
@@ -12,7 +12,12 @@
     <!-- 비밀번호 입력 -->
     <div class="input-section">
         <label for="teacher-password">비밀번호:</label>
-        <input type="password" id="teacher-password" placeholder="비밀번호를 입력하세요" onkeypress="handleEnter(event)">
+        <input
+            type="password"
+            id="teacher-password"
+            placeholder="비밀번호를 입력하세요"
+            onkeypress="handleEnter(event, authenticate)"
+        >
         <button id="authenticate-button" onclick="authenticate()">조회</button>
     </div>
 
@@ -22,7 +27,12 @@
         <h2>학생 등록</h2>
         <div class="input-section">
             <label for="student-name">학생 이름:</label>
-            <input type="text" id="student-name" placeholder="학생 이름을 입력하세요">
+            <input
+                type="text"
+                id="student-name"
+                placeholder="학생 이름을 입력하세요"
+                onkeypress="handleEnter(event, registerStudent)"
+            >
             <button onclick="registerStudent()">등록</button>
         </div>
 
@@ -32,7 +42,6 @@
             <label for="delete-student-id">삭제할 학생:</label>
             <select id="delete-student-id">
                 <option disabled selected>삭제할 학생을 선택하세요</option>
-                <!-- 학생 목록이 여기에 추가됩니다 -->
             </select>
             <button onclick="deleteStudent()">삭제</button>
         </div>
@@ -41,9 +50,19 @@
         <h2>마일리지 카테고리 추가</h2>
         <div class="input-section">
             <label for="mileage-category-name">카테고리 이름:</label>
-            <input type="text" id="mileage-category-name" placeholder="카테고리 이름을 입력하세요">
+            <input
+                type="text"
+                id="mileage-category-name"
+                placeholder="카테고리 이름을 입력하세요"
+                onkeypress="handleEnter(event, addMileageCategory)"
+            >
             <label for="mileage-category-points">포인트:</label>
-            <input type="number" id="mileage-category-points" placeholder="포인트를 입력하세요">
+            <input
+                type="number"
+                id="mileage-category-points"
+                placeholder="포인트를 입력하세요"
+                onkeypress="handleEnter(event, addMileageCategory)"
+            >
             <button onclick="addMileageCategory()">추가</button>
         </div>
 
@@ -53,14 +72,19 @@
             <label for="student-id">학생 선택:</label>
             <select id="student-id">
                 <option disabled selected>학생을 선택하세요</option>
-                <!-- 학생 목록이 여기에 추가됩니다 -->
             </select>
 
             <label for="mileage-type">마일리지 카테고리:</label>
             <select id="mileage-type">
                 <option disabled selected>마일리지 카테고리를 선택하세요</option>
-                <!-- 마일리지 카테고리 옵션이 여기에 추가됩니다 -->
             </select>
+
+            <label for="mileage-date">날짜:</label>
+            <input
+                type="date"
+                id="mileage-date"
+                placeholder="날짜를 선택하세요"
+            >
 
             <button onclick="addMileage()">마일리지 추가</button>
         </div>

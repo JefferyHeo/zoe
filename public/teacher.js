@@ -49,7 +49,7 @@ function updateSelectOptions(selectId, optionsData, placeholder) {
     optionsData.forEach(item => {
         const option = document.createElement("option");
         option.value = item.id;
-        option.textContent = item.name;
+        option.textContent = item.name || `${item.name} (${item.points}점)`; // 학생 or 카테고리
         selectElement.appendChild(option);
     });
 }

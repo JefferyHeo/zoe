@@ -138,12 +138,10 @@ function addMileageCategory() {
 // 마일리지 추가
 function addMileage() {
     const studentId = document.getElementById("student-id").value;
-    const mileageTypeSelect = document.getElementById("mileage-type");
-    const mileageType = mileageTypeSelect.options[mileageTypeSelect.selectedIndex]?.text;
-    const points = parseInt(mileageTypeSelect.value);
-    const date = new Date().toISOString().split('T')[0]; // 현재 날짜
+    const points = parseInt(document.getElementById("mileage-type").value);
+    const mileageType = document.getElementById("mileage-type").options[document.getElementById("mileage-type").selectedIndex].text;
 
-    if (!studentId || !mileageType || isNaN(points)) {
+    if (!studentId || isNaN(points)) {
         alert("학생과 마일리지 카테고리를 선택하세요.");
         return;
     }
@@ -151,11 +149,13 @@ function addMileage() {
     fetch('/api/add-mileage', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ studentId, mileageType, points, date })
+        body: JSON.stringify({ studentId, mileageType, points })
     })
-        .then(response => response.json())
-        .then(data => alert(data.message))
-        .catch(error => console.error("마일리지 추가 실패:", error));
+    .then(response => response.json())
+    .then(data => {
+        alert("마일리지 부여 완료");
+    })
+    .catch(error => console.error("마일리지 추가 실패:", error));
 }
 
 // DOMContentLoaded 이벤트

@@ -21,13 +21,14 @@ function authenticate() {
     if (password === correctPassword) {
         alert("비밀번호 인증 성공!");
         document.getElementById("mileage-management").style.display = "block";
-        document.getElementById("password-section").style.display = "none";
+        document.getElementById("password-section").style.display = "none"; // 비밀번호 입력 필드 숨김
         fetchStudents();
         fetchMileageCategories();
     } else {
         alert("비밀번호가 틀렸습니다.");
     }
 }
+
 
 // 학생 목록 불러오기
 function fetchStudents() {
@@ -83,7 +84,7 @@ function addMileageCategory() {
     const points = parseInt(document.getElementById("mileage-category-points").value);
 
     if (!name || isNaN(points)) {
-        alert("카테고리 이름과 포인트를 올바르게 입력하세요.");
+        alert("카테고리 이름과 포인트를 입력하세요.");
         return;
     }
 
@@ -92,15 +93,14 @@ function addMileageCategory() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, points })
     })
-        .then(response => response.json())
-        .then(data => {
-            alert(`마일리지 카테고리 추가 완료: ${data.category.name} (${data.category.points}점)`);
-            document.getElementById("mileage-category-name").value = "";
-            document.getElementById("mileage-category-points").value = "";
-            fetchMileageCategories();
-        })
-        .catch(error => alert("카테고리 추가 실패: " + error.message));
+    .then(response => response.json())
+    .then(data => {
+        alert(`마일리지 카테고리 추가 완료: ${data.category.name} (${data.category.points}점)`);
+        fetchMileageCategories(); // 새롭게 추가된 카테고리를 목록에 반영
+    })
+    .catch(error => alert("카테고리 추가 실패: " + error.message));
 }
+
 
 // 마일리지 추가
 function addMileage() {
@@ -110,7 +110,8 @@ function addMileage() {
     const points = parseInt(mileageTypeSelect.value);
 
     if (!studentId || !mileageType || isNaN(points)) {
-        alert("학생과 마일리지 카테고리를 모두 선택하세요.");
+        alert("학생, 마일리지 카테고리를 모두 선택하세요.");
+        console.error("선택되지 않은 값:", { studentId, mileageType, points });
         return;
     }
 
@@ -119,10 +120,13 @@ function addMileage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ studentId, mileageType, points })
     })
-        .then(response => response.json())
-        .then(data => alert(data.message))
-        .catch(error => console.error("마일리지 추가 실패:", error));
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+    })
+    .catch(error => console.error("마일리지 추가 실패:", error));
 }
+
 
 // DOMContentLoaded 이벤트
 document.addEventListener("DOMContentLoaded", () => {
@@ -131,6 +135,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("authenticate-button").addEventListener("click", authenticate);
     document.getElementById("student-name").addEventListener("keypress", (event) => handleEnter(event, "register-button"));
     document.getElementById("register-button").addEventListener("click", registerStudent);
+    document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("add-category-button").addEventListener("click", addMileageCategory);
+    fetchMileageCategories(); // 페이지 로드 시 카테고리 목록 초기화
     document.getElementById("add-mileage-button").addEventListener("click", addMileage);
 });

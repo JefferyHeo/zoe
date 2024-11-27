@@ -8,7 +8,7 @@
 </head>
 <body>
     <header>
-        <button id="home-button">Home</button> <!-- Home으로 이동 -->
+        <button id="home-button" onclick="goToHomePage()">Home</button> <!-- Home으로 이동 -->
     </header>
 
     <h1 class="center-content">선생님 마일리지 관리</h1>
@@ -16,38 +16,38 @@
     <!-- 비밀번호 입력 -->
     <div class="center-content">
         <label for="teacher-password">비밀번호:</label>
-        <input type="password" id="teacher-password" placeholder="비밀번호를 입력하세요">
-        <button id="authenticate-button">조회</button>
+        <input type="password" id="teacher-password" placeholder="비밀번호를 입력하세요" required>
+        <button id="authenticate-button" onclick="authenticate()">조회</button>
     </div>
 
-    <!-- 마일리지 관리 섹션 (비밀번호 인증 후 표시) -->
+    <!-- 마일리지 관리 섹션 -->
     <div id="mileage-management" style="display: none;" class="center-content">
         <!-- 학생 등록 -->
         <h2>학생 등록</h2>
-        <div>
+        <div class="center-content">
             <label for="student-name">학생 이름:</label>
-            <input type="text" id="student-name" placeholder="학생 이름을 입력하세요">
-            <button id="register-button">등록</button>
+            <input type="text" id="student-name" placeholder="학생 이름을 입력하세요" required>
+            <button id="register-button" onclick="registerStudent()">등록</button>
         </div>
 
         <!-- 학생 삭제 -->
         <h2>학생 삭제</h2>
-        <div>
+        <div class="center-content">
             <label for="delete-student-id">삭제할 학생:</label>
             <select id="delete-student-id">
                 <option disabled selected>삭제할 학생을 선택하세요</option>
             </select>
-            <button id="delete-button">삭제</button>
+            <button id="delete-button" onclick="deleteStudent()">삭제</button>
         </div>
 
         <!-- 마일리지 카테고리 추가 -->
         <h2>마일리지 카테고리 추가</h2>
-        <div>
+        <div class="center-content">
             <label for="mileage-category-name">카테고리 이름:</label>
-            <input type="text" id="mileage-category-name" placeholder="카테고리 이름을 입력하세요">
+            <input type="text" id="mileage-category-name" placeholder="카테고리 이름을 입력하세요" required>
             <label for="mileage-category-points">포인트:</label>
-            <input type="number" id="mileage-category-points" placeholder="포인트를 입력하세요">
-            <button id="add-category-button">추가</button>
+            <input type="number" id="mileage-category-points" placeholder="포인트를 입력하세요" required>
+            <button id="add-category-button" onclick="addMileageCategory()">추가</button>
         </div>
 
         <!-- 마일리지 부여 -->
@@ -68,7 +68,6 @@
 
             <button id="add-mileage-button" onclick="addMileage()">추가</button> <!-- 버튼 클릭 시 addMileage 함수 실행 -->
         </div>
-
     </div>
 
     <script src="teacher.js"></script>

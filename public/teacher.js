@@ -138,26 +138,23 @@ function addMileageCategory() {
 
 // 마일리지 추가
 function addMileage() {
+    // 버튼 비활성화로 중복 클릭 방지
+    const button = document.getElementById("add-mileage-button");
+    button.disabled = true;
+
     const studentId = document.getElementById("student-id").value;
-    const mileageType = document.getElementById("mileage-type").value;
-    const pointsOption = document.getElementById("mileage-type").options[document.getElementById("mileage-type").selectedIndex];
-    const points = pointsOption ? parseInt(pointsOption.text.match(/\((.*?)점\)/)[1]) : null;
+    const points = parseInt(document.getElementById("mileage-type").value);
+    const mileageType = document.getElementById("mileage-type").options[document.getElementById("mileage-type").selectedIndex].text;
     const date = document.getElementById("mileage-date").value;
 
-    // 입력값 검증
-    if (!studentId) {
-        alert("학생을 선택하세요.");
-        return;
-    }
-    if (!mileageType || isNaN(points)) {
-        alert("마일리지 카테고리를 선택하세요.");
-        return;
-    }
-    if (!date) {
-        alert("날짜를 선택하세요.");
+    // 유효성 검사
+    if (!studentId || isNaN(points) || !date) {
+        alert("학생, 마일리지 카테고리, 날짜를 모두 선택하세요.");
+        button.disabled = false; // 비활성화 해제
         return;
     }
 
+    // API 호출
     fetch('/api/add-mileage', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -165,13 +162,15 @@ function addMileage() {
     })
         .then(response => response.json())
         .then(data => {
-            if (data.message === '마일리지 부여 완료') {
-                alert("마일리지 부여 완료");
-            } else {
-                alert(data.message);
-            }
+            alert("마일리지 부여 완료");
         })
-        .catch(error => alert("마일리지 추가 실패: " + error.message));
+        .catch(error => {
+            console.error("마일리지 추가 실패:", error);
+            alert("마일리지 추가에 실패했습니다. 다시 시도하세요.");
+        })
+        .finally(() => {
+            button.disabled = false; // 비활성화 해제
+        });
 }
 
 

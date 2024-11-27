@@ -144,30 +144,68 @@ function addMileage() {
     const points = parseInt(mileageTypeSelect.value);
     const date = document.getElementById("mileage-date").value;
 
+    // 입력값 유효성 검사
     if (!studentId || !mileageType || isNaN(points) || !date) {
         alert("학생, 마일리지 카테고리, 날짜를 모두 선택하세요.");
         return;
     }
 
+    // 데이터 전송
     fetch('/api/add-mileage', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ studentId, mileageType, points, date }) // 선택된 날짜 전달
+        body: JSON.stringify({ studentId, mileageType, points, date }) // 날짜를 포함해 전달
     })
-    .then(response => response.json())
-    .then(data => alert(data.message))
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("마일리지 추가 실패");
+        }
+        return response.json();
+    })
+    .then(data => {
+        alert(data.message);
+    })
     .catch(error => console.error("마일리지 추가 실패:", error));
 }
 
 
 // DOMContentLoaded 이벤트
 document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("home-button").addEventListener("click", goToHomePage);
-    document.getElementById("teacher-password").addEventListener("keypress", (event) => handleEnter(event, "authenticate-button"));
-    document.getElementById("authenticate-button").addEventListener("click", authenticate);
-    document.getElementById("student-name").addEventListener("keypress", (event) => handleEnter(event, "register-button"));
-    document.getElementById("register-button").addEventListener("click", registerStudent);
-    document.getElementById("delete-button").addEventListener("click", deleteStudent);
-    document.getElementById("add-category-button").addEventListener("click", addMileageCategory);
-    document.getElementById("add-mileage-button").addEventListener("click", addMileage);
+    // Home 버튼
+    const homeButton = document.getElementById("home-button");
+    homeButton.removeEventListener("click", goToHomePage);
+    homeButton.addEventListener("click", goToHomePage);
+
+    // 비밀번호 입력
+    const authButton = document.getElementById("authenticate-button");
+    authButton.removeEventListener("click", authenticate);
+    authButton.addEventListener("click", authenticate);
+
+    const teacherPassword = document.getElementById("teacher-password");
+    teacherPassword.removeEventListener("keypress", handleEnter);
+    teacherPassword.addEventListener("keypress", (event) => handleEnter(event, "authenticate-button"));
+
+    // 학생 등록
+    const registerButton = document.getElementById("register-button");
+    registerButton.removeEventListener("click", registerStudent);
+    registerButton.addEventListener("click", registerStudent);
+
+    const studentNameInput = document.getElementById("student-name");
+    studentNameInput.removeEventListener("keypress", handleEnter);
+    studentNameInput.addEventListener("keypress", (event) => handleEnter(event, "register-button"));
+
+    // 학생 삭제
+    const deleteButton = document.getElementById("delete-button");
+    deleteButton.removeEventListener("click", deleteStudent);
+    deleteButton.addEventListener("click", deleteStudent);
+
+    // 마일리지 카테고리 추가
+    const addCategoryButton = document.getElementById("add-category-button");
+    addCategoryButton.removeEventListener("click", addMileageCategory);
+    addCategoryButton.addEventListener("click", addMileageCategory);
+
+    // 마일리지 추가
+    const addMileageButton = document.getElementById("add-mileage-button");
+    addMileageButton.removeEventListener("click", addMileage);
+    addMileageButton.addEventListener("click", addMileage);
 });

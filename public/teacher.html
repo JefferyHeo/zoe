@@ -52,19 +52,23 @@
 
         <!-- 마일리지 부여 -->
         <h2>마일리지 부여</h2>
-        <div>
+        <div class="center-content">
             <label for="student-id">학생 선택:</label>
             <select id="student-id">
                 <option disabled selected>학생을 선택하세요</option>
             </select>
+
             <label for="mileage-type">마일리지 카테고리:</label>
             <select id="mileage-type">
                 <option disabled selected>마일리지 카테고리를 선택하세요</option>
             </select>
+
             <label for="mileage-date">날짜:</label>
-            <input type="date" id="mileage-date">
-            <button id="add-mileage-button">추가</button>
+            <input type="date" id="mileage-date" required> <!-- 날짜 입력 필드 추가 -->
+
+            <button id="add-mileage-button" onclick="addMileage()">추가</button> <!-- 버튼 클릭 시 addMileage 함수 실행 -->
         </div>
+
     </div>
 
     <script src="teacher.js"></script>

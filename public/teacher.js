@@ -1,5 +1,3 @@
-//teacher.js
-
 let mileageCategories = []; // 클라이언트에서 관리하는 마일리지 카테고리 목록
 let students = []; // 학생 목록
 

@@ -1,28 +1,11 @@
 let mileageCategories = []; // 클라이언트에서 관리하는 마일리지 카테고리 목록
 let students = []; // 학생 목록
 
-function handleEnter(event, action) {
-    if (event.key === 'Enter') {
-        action();
-    }
-}
-
 // Home으로 이동
 function goToHomePage() {
     window.location.href = "http://13.239.36.224:3000/index.html";
 }
-// DOMContentLoaded 이벤트 핸들러
-document.addEventListener("DOMContentLoaded", () => {
-    // Home 버튼
-    const homeButton = document.getElementById("home-button");
-    homeButton.addEventListener("click", goToHomePage);
 
-    // 비밀번호 입력에서 엔터키로 인증
-    document.getElementById("teacher-password").addEventListener("keypress", (event) => handleEnter(event, "authenticate-button"));
-
-    // 학생 등록에서 엔터키로 등록
-    document.getElementById("student-name").addEventListener("keypress", (event) => handleEnter(event, "register-button"));
-});
 // 엔터키로 버튼 클릭
 function handleEnter(event, buttonId) {
     if (event.key === "Enter") {
@@ -169,4 +152,12 @@ function addMileage() {
 document.addEventListener("DOMContentLoaded", () => {
     fetchMileageCategories();
     fetchStudents();
+
+    // Home 버튼 클릭 이벤트 추가
+    const homeButton = document.getElementById("home-button");
+    homeButton.addEventListener("click", goToHomePage);
+
+    // 엔터 키 입력 이벤트 추가
+    document.getElementById("teacher-password").addEventListener("keypress", (event) => handleEnter(event, "authenticate-button"));
+    document.getElementById("student-name").addEventListener("keypress", (event) => handleEnter(event, "register-button"));
 });

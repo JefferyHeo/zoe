@@ -58,12 +58,8 @@ app.post('/api/add-mileage', (req, res) => {
     }
 });
 
-
 // 학생 목록 조회 API
 app.get('/api/students', (req, res) => {
-    if (students.length === 0) {
-        students = [{ id: 1, name: "학생1", mileage: 0 }];
-    }
     res.json(students);
 });
 // 이름 기반 학생 마일리지 조회 API

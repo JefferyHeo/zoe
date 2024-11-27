@@ -155,10 +155,12 @@ function addMileage() {
     })
         .then(response => response.json())
         .then(data => {
+            console.log("마일리지 부여 완료:", data.log); // 서버로부터 받은 데이터 확인
             alert("마일리지 부여 완료");
         })
         .catch(error => alert("마일리지 추가 실패: " + error.message));
 }
+
 
 // DOMContentLoaded 이벤트
 document.addEventListener("DOMContentLoaded", () => {

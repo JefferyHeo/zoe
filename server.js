@@ -48,39 +48,8 @@ app.post('/api/add-mileage', (req, res) => {
     }
 
     const currentDate = new Date().toISOString().split('T')[0];
-
     mileageLog.push({ studentId: parseInt(studentId), mileageType, points, date: currentDate });
-    console.log('마일리지 추가:', { studentId, mileageType, points, date: currentDate });
     res.json({ message: '마일리지 부여 완료' });
-});
-
-// 학생 목록 조회
-app.get('/api/students', (req, res) => {
-    res.json(students);
-});
-
-// 이름 기반 학생 마일리지 조회
-app.get('/api/mileage/:studentName', (req, res) => {
-    const studentName = req.params.studentName;
-    const student = students.find(s => s.name === studentName);
-
-    if (!student) {
-        return res.status(404).json({ message: '학생을 찾을 수 없습니다.' });
-    }
-
-    const studentMileageLog = mileageLog.filter(log => log.studentId === student.id);
-    const totalMileage = studentMileageLog.reduce((sum, entry) => sum + entry.points, 0);
-
-    res.json({
-        studentName: student.name,
-        totalMileage,
-        log: studentMileageLog
-    });
-});
-
-// 마일리지 카테고리 조회
-app.get('/api/mileage-categories', (req, res) => {
-    res.json(mileageCategories);
 });
 
 // 마일리지 카테고리 추가
@@ -95,18 +64,14 @@ app.post('/api/add-mileage-category', (req, res) => {
     res.json({ message: '마일리지 카테고리 추가 완료', category: newCategory });
 });
 
-// 학생 삭제
-app.delete('/api/delete-student/:studentId', (req, res) => {
-    const studentId = parseInt(req.params.studentId);
-    const studentIndex = students.findIndex(s => s.id === studentId);
+// 학생 목록 조회
+app.get('/api/students', (req, res) => {
+    res.json(students);
+});
 
-    if (studentIndex !== -1) {
-        students.splice(studentIndex, 1);
-        mileageLog = mileageLog.filter(log => log.studentId !== studentId);
-        res.json({ message: '학생이 삭제되었습니다.' });
-    } else {
-        res.status(404).json({ message: '학생을 찾을 수 없습니다.' });
-    }
+// 마일리지 카테고리 조회
+app.get('/api/mileage-categories', (req, res) => {
+    res.json(mileageCategories);
 });
 
 app.listen(PORT, () => {

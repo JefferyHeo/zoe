@@ -21,10 +21,7 @@ function authenticate() {
     if (password === correctPassword) {
         alert("비밀번호 인증 성공!");
         document.getElementById("mileage-management").style.display = "block";
-
-        // 비밀번호 입력 필드 및 버튼 숨기기
         document.getElementById("password-section").style.display = "none";
-
         fetchStudents();
         fetchMileageCategories();
     } else {
@@ -80,6 +77,31 @@ function registerStudent() {
         .catch(error => alert("학생 등록 실패: " + error.message));
 }
 
+// 마일리지 카테고리 추가
+function addMileageCategory() {
+    const name = document.getElementById("mileage-category-name").value.trim();
+    const points = parseInt(document.getElementById("mileage-category-points").value);
+
+    if (!name || isNaN(points)) {
+        alert("카테고리 이름과 포인트를 올바르게 입력하세요.");
+        return;
+    }
+
+    fetch('/api/add-mileage-category', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, points })
+    })
+        .then(response => response.json())
+        .then(data => {
+            alert(`마일리지 카테고리 추가 완료: ${data.category.name} (${data.category.points}점)`);
+            document.getElementById("mileage-category-name").value = "";
+            document.getElementById("mileage-category-points").value = "";
+            fetchMileageCategories();
+        })
+        .catch(error => alert("카테고리 추가 실패: " + error.message));
+}
+
 // 마일리지 추가
 function addMileage() {
     const studentId = document.getElementById("student-id").value;
@@ -109,5 +131,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("authenticate-button").addEventListener("click", authenticate);
     document.getElementById("student-name").addEventListener("keypress", (event) => handleEnter(event, "register-button"));
     document.getElementById("register-button").addEventListener("click", registerStudent);
+    document.getElementById("add-category-button").addEventListener("click", addMileageCategory);
     document.getElementById("add-mileage-button").addEventListener("click", addMileage);
 });

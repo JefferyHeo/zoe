@@ -104,7 +104,7 @@ function fetchMileageCategories() {
             mileageCategories = categories;
             updateSelectOptions(
                 "mileage-type",
-                mileageCategories.map(c => ({ id: c.points, name: `${c.name} (${c.points}점)` })),
+                mileageCategories.map(c => ({ id: c.name, name: `${c.name} (${c.points}점)` })),
                 "마일리지 카테고리를 선택하세요"
             );
         })
@@ -139,8 +139,8 @@ function addMileageCategory() {
 // 마일리지 추가
 function addMileage() {
     const studentId = document.getElementById("student-id").value;
-    const points = parseInt(document.getElementById("mileage-type").value);
-    const mileageType = document.getElementById("mileage-type").options[document.getElementById("mileage-type").selectedIndex].text;
+    const mileageType = document.getElementById("mileage-type").value;
+    const points = parseInt(document.getElementById("mileage-type").options[document.getElementById("mileage-type").selectedIndex].text.match(/\((.*?)점\)/)[1]);
     const date = document.getElementById("mileage-date").value;
 
     if (!studentId || isNaN(points) || !date) {
@@ -154,7 +154,9 @@ function addMileage() {
         body: JSON.stringify({ studentId, mileageType, points, date })
     })
         .then(response => response.json())
-        .then(data => alert("마일리지 부여 완료"))
+        .then(data => {
+            alert("마일리지 부여 완료");
+        })
         .catch(error => alert("마일리지 추가 실패: " + error.message));
 }
 

@@ -70,6 +70,7 @@ app.get('/api/students', (req, res) => {
 app.get('/api/mileage/:studentName', (req, res) => {
     const studentName = req.params.studentName;
     const student = students.find(s => s.name === studentName);
+
     if (!student) {
         return res.status(404).json({ message: '학생을 찾을 수 없습니다.' });
     }
@@ -80,7 +81,7 @@ app.get('/api/mileage/:studentName', (req, res) => {
     res.json({
         studentName: student.name,
         totalMileage,
-        log: studentMileageLog
+        log: studentMileageLog // 로그에 `date` 포함
     });
 });
 

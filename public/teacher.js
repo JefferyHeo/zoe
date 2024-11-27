@@ -7,29 +7,6 @@ function handleEnter(event, action) {
     }
 }
 
-// Home으로 이동
-function goToHomePage() {
-    window.location.href = "http://13.239.36.224:3000/index.html";
-}
-// DOMContentLoaded 이벤트 핸들러
-document.addEventListener("DOMContentLoaded", () => {
-    // Home 버튼
-    const homeButton = document.getElementById("home-button");
-    homeButton.addEventListener("click", goToHomePage);
-
-    // 비밀번호 입력에서 엔터키로 인증
-    document.getElementById("teacher-password").addEventListener("keypress", (event) => handleEnter(event, "authenticate-button"));
-
-    // 학생 등록에서 엔터키로 등록
-    document.getElementById("student-name").addEventListener("keypress", (event) => handleEnter(event, "register-button"));
-});
-// 엔터키로 버튼 클릭
-function handleEnter(event, buttonId) {
-    if (event.key === "Enter") {
-        document.getElementById(buttonId).click();
-    }
-}
-
 function authenticate() {
     const password = document.getElementById("teacher-password").value;
     const correctPassword = "1002"; // 고정된 비밀번호

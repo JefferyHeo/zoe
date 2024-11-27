@@ -1,5 +1,3 @@
-//add.js
-
 // 학생 마일리지 조회 함수
 function fetchMileage() {
     const studentName = document.getElementById("student-name").value.trim();
@@ -50,7 +48,7 @@ function fetchMileage() {
 // 엔터 키 입력 시 조회 실행
 function handleEnter(event) {
     if (event.key === "Enter") {
-        document.getElementById("fetch-button").click();
+        fetchMileage(); // 엔터 키로 조회 실행
     }
 }
 
@@ -61,9 +59,11 @@ function goToTeacherPage() {
 
 // DOMContentLoaded 이벤트 핸들러
 document.addEventListener("DOMContentLoaded", () => {
+    // "학생 이름" 입력 필드에 엔터 키 이벤트 리스너 추가
     const studentNameInput = document.getElementById("student-name");
     studentNameInput.addEventListener("keypress", handleEnter);
 
+    // "Officer" 버튼 클릭 시 이동
     const officerButton = document.getElementById("officer-button");
     officerButton.addEventListener("click", goToTeacherPage);
 });

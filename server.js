@@ -36,28 +36,22 @@ app.post('/api/register-student', (req, res) => {
 
 // 마일리지 추가
 app.post('/api/add-mileage', (req, res) => {
-    const { studentId, mileageType, points, date } = req.body; // 클라이언트에서 날짜 받아오기
+    const { studentId, mileageType, points, date } = req.body; // 클라이언트에서 보낸 날짜 사용
     const student = students.find(s => s.id === parseInt(studentId));
 
     if (!student) {
-        return res.status(404).json({ message: '학생을 찾을 수 없습니다.' });
+        return res.status(404).json({ message: '학생을 찾을 수 없습니다' });
     }
 
-    // 날짜가 유효한지 확인
-    const isValidDate = (date) => {
-        const parsedDate = new Date(date);
-        return parsedDate instanceof Date && !isNaN(parsedDate); // 유효한 날짜인지 확인
-    };
-
-    if (!date || !isValidDate(date)) {
-        return res.status(400).json({ message: '유효한 날짜를 입력하세요.' });
+    if (!date) {
+        return res.status(400).json({ message: '날짜가 누락되었습니다.' });
     }
 
-    // 클라이언트에서 전달된 날짜를 그대로 사용
     mileageLog.push({ studentId: parseInt(studentId), mileageType, points, date });
     console.log('마일리지가 추가되었습니다:', { studentId, mileageType, points, date });
-    res.json({ message: '마일리지 부여 완료', log: { studentId, mileageType, points, date } });
+    res.json({ message: '마일리지 부여 완료' });
 });
+
 
 
 // 학생 목록 조회

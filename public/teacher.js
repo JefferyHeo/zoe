@@ -138,11 +138,13 @@ function addMileageCategory() {
 // 마일리지 추가
 function addMileage() {
     const studentId = document.getElementById("student-id").value;
-    const points = parseInt(document.getElementById("mileage-type").value);
-    const mileageType = document.getElementById("mileage-type").options[document.getElementById("mileage-type").selectedIndex].text;
+    const mileageTypeElement = document.getElementById("mileage-type");
+    const points = parseInt(mileageTypeElement.value);
+    const mileageType = mileageTypeElement.options[mileageTypeElement.selectedIndex]?.text;
 
-    if (!studentId || isNaN(points)) {
-        alert("학생과 마일리지 카테고리를 선택하세요.");
+    // 입력값 검증
+    if (!studentId || isNaN(points) || !mileageType) {
+        alert("학생과 마일리지 카테고리를 올바르게 선택하세요.");
         return;
     }
 
@@ -151,12 +153,21 @@ function addMileage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ studentId, mileageType, points })
     })
-    .then(response => response.json())
-    .then(data => {
-        alert("마일리지 부여 완료");
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('서버에서 오류가 발생했습니다.');
+        }
+        return response.json();
     })
-    .catch(error => console.error("마일리지 추가 실패:", error));
+    .then(data => {
+        alert(data.message);
+    })
+    .catch(error => {
+        console.error("마일리지 추가 실패:", error);
+        alert("마일리지 추가 중 오류가 발생했습니다. 다시 시도하세요.");
+    });
 }
+
 
 // DOMContentLoaded 이벤트
 document.addEventListener("DOMContentLoaded", () => {

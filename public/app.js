@@ -40,16 +40,29 @@ function fetchMileage() {
         .catch(error => alert("마일리지 조회 실패: " + error.message));
 }
 
-// 교사 페이지 이동
+// 엔터 키로 조회 버튼 클릭
+function handleEnter(event, buttonId) {
+    if (event.key === "Enter") {
+        document.getElementById(buttonId).click();
+    }
+}
+
+// 교사 페이지로 이동
 function goToTeacherPage() {
     window.location.href = "teacher.html";
 }
 
 // 페이지 로드 시 이벤트 등록
 document.addEventListener("DOMContentLoaded", () => {
+    // 학생 이름 입력 필드에서 엔터키로 조회
     const studentNameInput = document.getElementById("student-name");
     studentNameInput.addEventListener("keypress", (event) => handleEnter(event, "fetch-button"));
 
+    // 조회 버튼 클릭 이벤트
+    const fetchButton = document.getElementById("fetch-button");
+    fetchButton.addEventListener("click", fetchMileage);
+
+    // Officer 버튼 클릭 이벤트
     const officerButton = document.getElementById("officer-button");
     officerButton.addEventListener("click", goToTeacherPage);
 });

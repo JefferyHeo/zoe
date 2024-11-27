@@ -170,6 +170,4 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("delete-button").addEventListener("click", deleteStudent);
     document.getElementById("add-category-button").addEventListener("click", addMileageCategory);
     document.getElementById("add-mileage-button").addEventListener("click", addMileage);
-    fetchMileageCategories();
-    fetchStudents();
 });

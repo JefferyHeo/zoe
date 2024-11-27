@@ -63,11 +63,19 @@
                 <option disabled selected>마일리지 카테고리를 선택하세요</option>
             </select>
 
-            <label for="mileage-date">날짜:</label>
-            <input type="date" id="mileage-date" required> <!-- 날짜 입력 필드 추가 -->
+            <!-- 날짜 선택: 드롭다운 -->
+            <label for="year-select">연도:</label>
+            <select id="year-select"></select>
+
+            <label for="month-select">월:</label>
+            <select id="month-select"></select>
+
+            <label for="day-select">일:</label>
+            <select id="day-select"></select>
 
             <button id="add-mileage-button" onclick="addMileage()">추가</button> <!-- 버튼 클릭 시 addMileage 함수 실행 -->
         </div>
+        
     </div>
 
     <script src="teacher.js"></script>

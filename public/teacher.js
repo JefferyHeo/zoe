@@ -142,7 +142,7 @@ function addMileage() {
     const mileageTypeSelect = document.getElementById("mileage-type");
     const mileageType = mileageTypeSelect.options[mileageTypeSelect.selectedIndex]?.text;
     const points = parseInt(mileageTypeSelect.value);
-    const date = document.getElementById("mileage-date").value;
+    const date = getSelectedDate(); // 드롭다운에서 선택된 날짜
 
     if (!studentId || !mileageType || isNaN(points) || !date) {
         alert("학생, 마일리지 카테고리, 날짜를 모두 선택하세요.");
@@ -154,38 +154,86 @@ function addMileage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ studentId, mileageType, points, date })
     })
-        .then(response => response.json())
-        .then(data => {
-            if (data.message) alert(data.message);
-        })
-        .catch(error => alert("마일리지 추가 실패: " + error.message));
+    .then(response => response.json())
+    .then(data => alert(data.message))
+    .catch(error => alert("마일리지 추가 실패: " + error.message));
 }
-
 
 // DOMContentLoaded 이벤트
 document.addEventListener("DOMContentLoaded", () => {
-    // Home 버튼 이벤트
+    // 기존 초기화 코드
     document.getElementById("home-button").addEventListener("click", goToHomePage);
+    document.getElementById("teacher-password").addEventListener("keypress", (event) => handleEnter(event, "authenticate-button"));
+    document.getElementById("authenticate-button").addEventListener("click", authenticate);
+    document.getElementById("student-name").addEventListener("keypress", (event) => handleEnter(event, "register-button"));
+    document.getElementById("register-button").addEventListener("click", registerStudent);
+    document.getElementById("delete-button").addEventListener("click", deleteStudent);
+    document.getElementById("add-category-button").addEventListener("click", addMileageCategory);
+    document.getElementById("add-mileage-button").addEventListener("click", addMileage);
 
-    // 비밀번호 인증
-    const authenticateButton = document.getElementById("authenticate-button");
-    authenticateButton.onclick = authenticate;
-    document.getElementById("teacher-password").addEventListener("keypress", (event) => handleEnter(event, authenticateButton));
+    // 날짜 드롭다운 초기화
+    initializeYearOptions();
+    initializeMonthOptions();
+    initializeDayOptions();
 
-    // 학생 등록
-    const registerButton = document.getElementById("register-button");
-    registerButton.onclick = registerStudent;
-    document.getElementById("student-name").addEventListener("keypress", (event) => handleEnter(event, registerButton));
-
-    // 학생 삭제
-    const deleteButton = document.getElementById("delete-button");
-    deleteButton.onclick = deleteStudent;
-
-    // 마일리지 카테고리 추가
-    const addCategoryButton = document.getElementById("add-category-button");
-    addCategoryButton.onclick = addMileageCategory;
-
-    // 마일리지 추가
-    const addMileageButton = document.getElementById("add-mileage-button");
-    addMileageButton.onclick = addMileage;
+    // 월이나 연도 변경 시 일 업데이트
+    document.getElementById("month-select").addEventListener("change", initializeDayOptions);
+    document.getElementById("year-select").addEventListener("change", initializeDayOptions);
 });
+
+// 날짜 드롭다운 초기화
+function initializeYearOptions() {
+    const yearSelect = document.getElementById("year-select");
+    const currentYear = new Date().getFullYear();
+
+    for (let i = currentYear; i >= currentYear - 100; i--) {
+        const option = document.createElement("option");
+        option.value = i;
+        option.textContent = `${i}년`;
+        yearSelect.appendChild(option);
+    }
+}
+
+function initializeMonthOptions() {
+    const monthSelect = document.getElementById("month-select");
+
+    for (let i = 1; i <= 12; i++) {
+        const option = document.createElement("option");
+        option.value = i.toString().padStart(2, '0'); // 01, 02 형식
+        option.textContent = `${i}월`;
+        monthSelect.appendChild(option);
+    }
+}
+
+function initializeDayOptions() {
+    const year = parseInt(document.getElementById("year-select").value);
+    const month = parseInt(document.getElementById("month-select").value);
+    const daySelect = document.getElementById("day-select");
+
+    // 기존 옵션 초기화
+    daySelect.innerHTML = "";
+
+    // 연도와 월에 따른 일수 계산
+    const daysInMonth = new Date(year, month, 0).getDate();
+
+    for (let i = 1; i <= daysInMonth; i++) {
+        const option = document.createElement("option");
+        option.value = i.toString().padStart(2, '0'); // 01, 02 형식
+        option.textContent = `${i}일`;
+        daySelect.appendChild(option);
+    }
+}
+
+// 선택된 날짜 가져오기
+function getSelectedDate() {
+    const year = document.getElementById("year-select").value;
+    const month = document.getElementById("month-select").value;
+    const day = document.getElementById("day-select").value;
+
+    if (!year || !month || !day) {
+        alert("날짜를 모두 선택하세요.");
+        return null;
+    }
+
+    return `${year}-${month}-${day}`;
+}

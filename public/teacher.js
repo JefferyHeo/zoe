@@ -143,8 +143,8 @@ function addMileage() {
     const points = parseInt(document.getElementById("mileage-type").options[document.getElementById("mileage-type").selectedIndex].text.match(/\((.*?)점\)/)[1]);
     const date = document.getElementById("mileage-date").value;
 
-    if (!studentId || isNaN(points)) {
-        alert("학생, 마일리지 카테고리를 모두 선택하세요.");
+    if (!studentId || isNaN(points) || !date) {
+        alert("학생, 마일리지 카테고리, 날짜를 모두 선택하세요.");
         return;
     }
 

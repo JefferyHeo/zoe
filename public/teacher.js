@@ -1,19 +1,19 @@
-let mileageCategories = []; // 클라이언트에서 관리하는 마일리지 카테고리 목록
-let students = []; // 학생 목록
+let mileageCategories = [];
+let students = [];
 
-// Home으로 이동
+// 홈 버튼으로 이동
 function goToHomePage() {
     window.location.href = "http://13.239.36.224:3000/index.html";
 }
 
-// 엔터키로 버튼 클릭
+// 엔터 키 핸들러
 function handleEnter(event, buttonId) {
     if (event.key === "Enter") {
         document.getElementById(buttonId).click();
     }
 }
 
-// 비밀번호 인증
+// 인증 기능
 function authenticate() {
     const password = document.getElementById("teacher-password").value;
     const correctPassword = "1002"; // 고정된 비밀번호
@@ -42,6 +42,7 @@ function fetchStudents() {
         .catch(error => alert('학생 목록 불러오기 실패: ' + error.message));
 }
 
+// 드롭다운 옵션 업데이트
 function updateSelectOptions(selectId, optionsData, placeholder) {
     const selectElement = document.getElementById(selectId);
     selectElement.innerHTML = `<option disabled selected>${placeholder}</option>`;
@@ -77,17 +78,21 @@ function registerStudent() {
     .catch(error => alert('학생 등록 실패: ' + error.message));
 }
 
-// 페이지 로드 시 초기 데이터 불러오기
+// 페이지 로드 시 이벤트 등록
 document.addEventListener("DOMContentLoaded", () => {
     fetchMileageCategories();
     fetchStudents();
 
-    // 이벤트 리스너 설정
+    // 홈 버튼
     document.getElementById("home-button").addEventListener("click", goToHomePage);
+
+    // 조회 버튼
     document.getElementById("authenticate-button").addEventListener("click", authenticate);
+
+    // 등록 버튼
     document.getElementById("register-button").addEventListener("click", registerStudent);
 
-    // 엔터키 이벤트 추가
+    // 엔터키 동작 추가
     document.getElementById("teacher-password").addEventListener("keypress", (event) => handleEnter(event, "authenticate-button"));
     document.getElementById("student-name").addEventListener("keypress", (event) => handleEnter(event, "register-button"));
 });

@@ -58,7 +58,6 @@ app.post('/api/add-mileage', (req, res) => {
     }
 });
 
-
 // 학생 목록 조회 API
 app.get('/api/students', (req, res) => {
     res.json(students);

@@ -14,7 +14,7 @@
     <h1 class="center-content">선생님 마일리지 관리</h1>
 
     <!-- 비밀번호 입력 -->
-    <div id="password-section" class="center-content">
+    <div class="center-content">
         <label for="teacher-password">비밀번호:</label>
         <input type="password" id="teacher-password" placeholder="비밀번호를 입력하세요">
         <button id="authenticate-button">조회</button>
@@ -52,18 +52,18 @@
 
         <!-- 마일리지 부여 -->
         <h2>마일리지 부여</h2>
-        <div class="center-content">
+        <div>
             <label for="student-id">학생 선택:</label>
             <select id="student-id">
                 <option disabled selected>학생을 선택하세요</option>
             </select>
-
             <label for="mileage-type">마일리지 카테고리:</label>
             <select id="mileage-type">
                 <option disabled selected>마일리지 카테고리를 선택하세요</option>
             </select>
-
-            <button id="add-mileage-button">추가</button> <!-- 버튼 클릭 시 addMileage 함수 실행 -->
+            <label for="mileage-date">날짜:</label>
+            <input type="date" id="mileage-date">
+            <button id="add-mileage-button">추가</button>
         </div>
     </div>
 

@@ -20,8 +20,9 @@ function authenticate() {
 
     if (password === correctPassword) {
         alert("비밀번호 인증 성공!");
-        document.getElementById("password-section").style.display = "none"; // 비밀번호 입력 섹션 숨기기
-        document.getElementById("mileage-management").style.display = "block"; // 마일리지 관리 섹션 표시
+        document.getElementById("mileage-management").style.display = "block";
+        document.getElementById("teacher-password").disabled = true;
+        document.getElementById("authenticate-button").disabled = true;
         fetchStudents();
         fetchMileageCategories();
     } else {
@@ -38,7 +39,7 @@ function fetchStudents() {
             updateSelectOptions("student-id", students, "학생을 선택하세요");
             updateSelectOptions("delete-student-id", students, "삭제할 학생을 선택하세요");
         })
-        .catch(error => console.error("학생 목록 불러오기 실패:", error));
+        .catch(error => alert("학생 목록 불러오기 실패: " + error.message));
 }
 
 // 선택 옵션 업데이트
@@ -107,7 +108,7 @@ function fetchMileageCategories() {
                 "마일리지 카테고리를 선택하세요"
             );
         })
-        .catch(error => console.error("마일리지 카테고리 불러오기 실패:", error));
+        .catch(error => alert("마일리지 카테고리 불러오기 실패: " + error.message));
 }
 
 // 마일리지 카테고리 추가
@@ -138,34 +139,29 @@ function addMileageCategory() {
 // 마일리지 추가
 function addMileage() {
     const studentId = document.getElementById("student-id").value;
-    const mileageTypeElement = document.getElementById("mileage-type");
-    const mileageType = mileageTypeElement.options[mileageTypeElement.selectedIndex]?.text || null;
-    const points = parseInt(mileageTypeElement.value, 10);
+    const mileageType = document.getElementById("mileage-type").value;
+    const points = parseInt(document.getElementById("mileage-type").options[document.getElementById("mileage-type").selectedIndex].text.match(/\((.*?)점\)/)[1]);
+    const date = document.getElementById("mileage-date").value;
 
-    console.log("addMileage called with:", { studentId, mileageType, points });
-
-    if (!studentId || isNaN(points)) {
-        alert("학생과 마일리지 카테고리를 선택하세요.");
+    if (!studentId || isNaN(points) || !date) {
+        alert("학생, 마일리지 카테고리, 날짜를 모두 선택하세요.");
         return;
     }
 
     fetch('/api/add-mileage', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ studentId, mileageType, points })
+        body: JSON.stringify({ studentId, mileageType, points, date })
     })
         .then(response => response.json())
         .then(data => {
             alert("마일리지 부여 완료");
         })
-        .catch(error => console.error("마일리지 추가 실패:", error));
+        .catch(error => alert("마일리지 추가 실패: " + error.message));
 }
-
 
 // DOMContentLoaded 이벤트
 document.addEventListener("DOMContentLoaded", () => {
-  fetchStudents();
-  fetchMileageCategories();
     document.getElementById("home-button").addEventListener("click", goToHomePage);
     document.getElementById("teacher-password").addEventListener("keypress", (event) => handleEnter(event, "authenticate-button"));
     document.getElementById("authenticate-button").addEventListener("click", authenticate);
@@ -174,4 +170,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("delete-button").addEventListener("click", deleteStudent);
     document.getElementById("add-category-button").addEventListener("click", addMileageCategory);
     document.getElementById("add-mileage-button").addEventListener("click", addMileage);
+    fetchMileageCategories();
+    fetchStudents();
 });

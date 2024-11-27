@@ -1,3 +1,5 @@
+//teacher.html
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -8,16 +10,16 @@
 </head>
 <body>
     <header>
-        <button id="home-button">Home</button>
+        <button id="home-button">Home</button> <!-- Home으로 이동 -->
     </header>
 
     <h1 class="center-content">선생님 마일리지 관리</h1>
 
     <!-- 비밀번호 입력 -->
-    <div id="password-section" class="center-content">
+    <div class="center-content">
         <label for="teacher-password">비밀번호:</label>
         <input type="password" id="teacher-password" placeholder="비밀번호를 입력하세요">
-        <button id="authenticate-button">조회</button>
+        <button id="authenticate-button" onclick="authenticate()">조회</button>
     </div>
 
     <!-- 마일리지 관리 섹션 (비밀번호 인증 후 표시) -->
@@ -57,12 +59,12 @@
             <select id="student-id">
                 <option disabled selected>학생을 선택하세요</option>
             </select>
-
             <label for="mileage-type">마일리지 카테고리:</label>
             <select id="mileage-type">
                 <option disabled selected>마일리지 카테고리를 선택하세요</option>
             </select>
-
+            <label for="mileage-date">날짜:</label>
+            <input type="date" id="mileage-date">
             <button id="add-mileage-button">추가</button>
         </div>
     </div>

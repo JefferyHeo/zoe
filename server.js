@@ -36,9 +36,9 @@ app.post('/api/register-student', (req, res) => {
 
 // 마일리지 추가
 app.post('/api/add-mileage', (req, res) => {
-    const { studentId, mileageType, points, date } = req.body;
+    const { studentId, mileageType, points } = req.body;
 
-    if (!studentId || !mileageType || isNaN(points) || !date) {
+    if (!studentId || !mileageType || isNaN(points)) {
         return res.status(400).json({ message: '필수 입력값이 누락되었습니다.' });
     }
 
@@ -47,11 +47,13 @@ app.post('/api/add-mileage', (req, res) => {
         return res.status(404).json({ message: '학생을 찾을 수 없습니다.' });
     }
 
-    mileageLog.push({ studentId: parseInt(studentId), mileageType, points, date });
-    console.log('마일리지 추가:', { studentId, mileageType, points, date });
+    // 현재 날짜 자동 설정
+    const currentDate = new Date().toISOString().split('T')[0];
+
+    mileageLog.push({ studentId: parseInt(studentId), mileageType, points, date: currentDate });
+    console.log('마일리지 추가:', { studentId, mileageType, points, date: currentDate });
     res.json({ message: '마일리지 부여 완료' });
 });
-
 
 // 학생 목록 조회
 app.get('/api/students', (req, res) => {

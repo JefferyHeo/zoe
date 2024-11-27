@@ -11,7 +11,7 @@
         <button id="home-button">Home</button> <!-- Home으로 이동 -->
     </header>
 
-    <h1>선생님 마일리지 관리</h1>
+    <h1 class="center-content">선생님 마일리지 관리</h1>
 
     <!-- 비밀번호 입력 -->
     <div class="center-content">
@@ -27,7 +27,7 @@
         <div>
             <label for="student-name">학생 이름:</label>
             <input type="text" id="student-name" placeholder="학생 이름을 입력하세요">
-            <button onclick="registerStudent()">등록</button>
+            <button id="register-button">등록</button>
         </div>
 
         <!-- 학생 삭제 -->
@@ -37,7 +37,7 @@
             <select id="delete-student-id">
                 <option disabled selected>삭제할 학생을 선택하세요</option>
             </select>
-            <button onclick="deleteStudent()">삭제</button>
+            <button id="delete-button">삭제</button>
         </div>
 
         <!-- 마일리지 카테고리 추가 -->
@@ -47,7 +47,7 @@
             <input type="text" id="mileage-category-name" placeholder="카테고리 이름을 입력하세요">
             <label for="mileage-category-points">포인트:</label>
             <input type="number" id="mileage-category-points" placeholder="포인트를 입력하세요">
-            <button onclick="addMileageCategory()">추가</button>
+            <button id="add-category-button">추가</button>
         </div>
 
         <!-- 마일리지 부여 -->
@@ -63,7 +63,7 @@
             </select>
             <label for="mileage-date">날짜:</label>
             <input type="date" id="mileage-date">
-            <button onclick="addMileage()">추가</button>
+            <button id="add-mileage-button">추가</button>
         </div>
     </div>
 

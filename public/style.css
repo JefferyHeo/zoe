@@ -20,6 +20,26 @@ input, button, select {
     padding: 8px;
 }
 
+.center-content {
+    text-align: center;
+    margin: 20px auto;
+}
+
+header {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+    background-color: #f4f4f4;
+}
+
+header button {
+    margin-right: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+
 /* 반응형 스타일 - 작은 화면 (모바일) */
 @media (max-width: 600px) {
     h1 {
@@ -35,6 +55,7 @@ input, button, select {
         margin: 10px;
     }
 }
+
 
 /* 반응형 스타일 - 큰 화면 (PC) */
 @media (min-width: 601px) {

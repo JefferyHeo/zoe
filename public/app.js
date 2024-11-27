@@ -48,26 +48,20 @@ function fetchMileage() {
 // 엔터 키 입력 시 조회 실행
 function handleEnter(event) {
     if (event.key === "Enter") {
-        fetchMileage(); // 엔터 키로 조회 실행
+        document.getElementById("fetch-button").click();
     }
 }
 
 // teacher.html로 이동
 function goToTeacherPage() {
-    window.location.href = "http://13.239.36.224:3000/teacher.html";
+    window.location.href = "teacher.html";
 }
 
 // DOMContentLoaded 이벤트 핸들러
 document.addEventListener("DOMContentLoaded", () => {
-    // "학생 이름" 입력 필드에 엔터 키 이벤트 리스너 추가
     const studentNameInput = document.getElementById("student-name");
     studentNameInput.addEventListener("keypress", handleEnter);
 
-    // "조회" 버튼 클릭 이벤트 리스너 추가
-    const fetchButton = document.getElementById("fetch-button");
-    fetchButton.addEventListener("click", fetchMileage);
-
-    // "Officer" 버튼 클릭 시 이동
     const officerButton = document.getElementById("officer-button");
     officerButton.addEventListener("click", goToTeacherPage);
 });

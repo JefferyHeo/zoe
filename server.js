@@ -47,7 +47,6 @@ app.post('/api/add-mileage', (req, res) => {
         return res.status(404).json({ message: '학생을 찾을 수 없습니다.' });
     }
 
-    // 현재 날짜 자동 설정
     const currentDate = new Date().toISOString().split('T')[0];
 
     mileageLog.push({ studentId: parseInt(studentId), mileageType, points, date: currentDate });

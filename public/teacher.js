@@ -21,8 +21,10 @@ function authenticate() {
     if (password === correctPassword) {
         alert("비밀번호 인증 성공!");
         document.getElementById("mileage-management").style.display = "block";
-        document.getElementById("teacher-password").style.display = "none";
-        document.getElementById("authenticate-button").style.display = "none";
+
+        // 비밀번호 입력 필드 및 버튼 숨기기
+        document.getElementById("password-section").style.display = "none";
+
         fetchStudents();
         fetchMileageCategories();
     } else {
@@ -103,6 +105,7 @@ function addMileage() {
 // DOMContentLoaded 이벤트
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("home-button").addEventListener("click", goToHomePage);
+    document.getElementById("teacher-password").addEventListener("keypress", (event) => handleEnter(event, "authenticate-button"));
     document.getElementById("authenticate-button").addEventListener("click", authenticate);
     document.getElementById("student-name").addEventListener("keypress", (event) => handleEnter(event, "register-button"));
     document.getElementById("register-button").addEventListener("click", registerStudent);
